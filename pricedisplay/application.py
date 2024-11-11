@@ -10,6 +10,7 @@ import traceback
 from .configparser import Config
 from .datahandler import PriceDataHandler
 from .graphics import PriceDisplay
+from .webhooks import WebHook
 
 from .exceptions import *
 
@@ -31,6 +32,7 @@ class App:
 	def __init__( self, options ):
 		dataOptions = {}
 		displayOptions = {}
+		webHookOptions = {}
 		
 		# check that all options are present
 		try:
@@ -73,6 +75,9 @@ class App:
 			displayOptions['reverse'] = options['layout.reverse']
 			
 			displayOptions['normalTimezone'] = options['data.normalTimezone']
+			webHookOptions['baseURL'] = options['webhook.url']
+			webHookOptions['highMessage'] = options['webhook.high']
+			webHookOptions['lowMessage'] = options['webhook.low']
 		
 		except KeyError as err:
 			raise MissingOptionError( err.args[0] )
@@ -85,6 +90,8 @@ class App:
 		self._display = PriceDisplay( ( 0,0 ), displayOptions, parent=stdscr )
 		
 		self._data = PriceDataHandler( dataOptions )
+
+		self._webhook = WebHook( webHookOptions )
 	
 	def _EndCurses( self ):
 		"""Reverse terminal settings."""
@@ -171,7 +178,16 @@ class App:
 		
 		self._display.Update( prices )
 		self._lastDisplayUpdate = now
+
+		self._WebHookCheck( now, prices.today )
 	
+	def _WebHookCheck( now, prices_today ):
+		"""Checks if we need to fire webhooks."""
+		if None in prices_today:
+			pass
+
+		self._webhook.check( now, prices_today )
+
 	def _Mainloop( self ):
 		"""Mainloop of the application."""
 		
@@ -191,6 +207,8 @@ class App:
 			# update the hourly prices
 			if now.hour != self._lastDisplayUpdate.hour:
 				self._HourlyUpdate( now )
+				# Check if we've exceeded webhook thresholds
+				self._WebHookCheck( now )
 			
 			time.sleep( 1 )
 		
