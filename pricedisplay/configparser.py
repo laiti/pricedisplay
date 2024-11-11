@@ -269,13 +269,6 @@ class Config(_Queries):
 		# always migrate the options, if an old config exists
 		if self._oldConfigFilePath:
 			self.Migrate( config )
-			question = 'Do you want to edit the new options?'
-		else:
-			question = 'Do you want to edit the configuration file?'
-		
-		edit = self._YesNo( question )
-		if edit:
-			self._Edit( config )
 		
 		self._WriteFile( config )
 		self._config = config
