@@ -148,3 +148,25 @@ price:
         type: float
         question: Low price limit?
         value: 5.0
+
+webhook:
+    url:
+        description: "Base URL for webhook calls."
+        essential: false
+        type: string
+        question: Webhook base URL?
+        value: http://example.com/api/v1/
+
+    high:
+        description: "Which message to send to webhook if value exceeds high threshold?"
+        essential: false
+        type: string
+        question: Webhook high message?
+        value "Electric price has exceeded high price limit"
+
+    low:
+        description: "Which message to send to webhook if value goes below low threshold?"
+        essential: false
+        type: string
+        question: Webhook low message?
+        value: "Electric price has gone below low price limit"
