@@ -15,7 +15,6 @@ from .webhooks import WebHook
 from .exceptions import *
 
 __version__ = '0.7.0'
-
 _debug = 0
 
 _noErrors = 0
@@ -181,7 +180,7 @@ class App:
 
 		self._WebHookCheck( now, prices.today )
 	
-	def _WebHookCheck( now, prices_today ):
+	def _WebHookCheck( self, now, prices_today ):
 		"""Checks if we need to fire webhooks."""
 		if None in prices_today:
 			pass
@@ -207,8 +206,6 @@ class App:
 			# update the hourly prices
 			if now.hour != self._lastDisplayUpdate.hour:
 				self._HourlyUpdate( now )
-				# Check if we've exceeded webhook thresholds
-				self._WebHookCheck( now )
 			
 			time.sleep( 1 )
 		
