@@ -19,8 +19,6 @@ class WebHook:
             self._lowTrigger = options['webhook.lowTrigger']
         except KeyError as err:
             raise MissingOptionError( err.args )
-    
-        self._ShouldRunWebhook(self, now, prices)
 
     def _MakeRequest( self, url, message ):
         content = {'message': message}

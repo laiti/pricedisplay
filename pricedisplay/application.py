@@ -75,8 +75,12 @@ class App:
 			
 			displayOptions['normalTimezone'] = options['data.normalTimezone']
 			webHookOptions['baseURL'] = options['webhook.url']
-			webHookOptions['highMessage'] = options['webhook.high']
-			webHookOptions['lowMessage'] = options['webhook.low']
+			webHookOptions['toHighMessage'] = options['webhook.tohigh']
+			webHookOptions['toLowMessage'] = options['webhook.tolow']
+			webHookOptions['fromHighMessage'] = options['webhook.fromhigh']
+			webHookOptions['fromLowMessage'] = options['webhook.fromlow']
+			webHookOptions['highTrigger'] = options['price.high']
+			webHookOptions['lowTrigger'] = options['price.low']
 		
 		except KeyError as err:
 			raise MissingOptionError( err.args[0] )
