@@ -11,8 +11,10 @@ class WebHook:
     def __init__( self, options ):
         try:
             self._baseUrl = options['webhook.url']
-            self._highMessage = options['webhook.high']
-            self._lowMessage = options['webhook.low']
+            self._toHighMessage = options['webhook.tohigh']
+            self._toLowMessage = options['webhook.tolow']
+            self._fromHighMessage = options['webhook.fromhigh']
+            self._fromLowMessage = options['webhook.fromlow']
             self._highTrigger = options['webhook.highTrigger']
             self._lowTrigger = options['webhook.lowTrigger']
         except KeyError as err:
@@ -29,6 +31,11 @@ class WebHook:
         # Webhook should be run if price for last hour is below the high trigger
         # but price for this hour is above it
         if prices[-2] < self._highTrigger and prices[-1] >= self._highTrigger:
-            self._MakeRequest(self._baseUrl, self._highMessage + " Value is now " + str(prices[-1]))
+            self._MakeRequest(self._baseUrl, self._toHighMessage + " Value is now " + str(prices[-1]))
         elif prices[-2] > self._lowTrigger and prices[-1] <= self._lowTrigger:
-            self._MakeRequest(self._baseUrl, self._lowMessage + " Value is now " + str(prices[-1]))
+            self._MakeRequest(self._baseUrl, self._toLowMessage + " Value is now " + str(prices[-1]))
+        # Mention also if we go over low threshold or below high threshold
+        elif prices[-2] < self._lowTrigger and prices[-1] >= self._lowTrigger:
+            self._MakeRequest(self._baseUrl, self._fromLowMessage + " Value is now " + str(prices[-1]))
+        elif prices[-2] > self._highTrigger and prices[-1] <= self._highTrigger:
+            self._MakeRequest(self._baseUrl, self._fromHighMessage + " Value is now " + str(prices[-1]))

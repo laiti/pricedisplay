@@ -157,16 +157,30 @@ webhook:
         question: Webhook base URL?
         value: http://example.com/api/v1/
 
-    high:
+    tohigh:
         description: "Which message to send to webhook if value exceeds high threshold?"
         essential: false
         type: string
-        question: Webhook high message?
+        question: Webhook transition to high message?
         value "Electric price has exceeded high price limit."
 
-    low:
+    tolow:
         description: "Which message to send to webhook if value goes below low threshold?"
         essential: false
         type: string
-        question: Webhook low message?
+        question: Webhook transition to low message?
         value: "Electric price has gone below low price limit."
+
+    fromhigh:
+        description: "Which message to send to webhook if value goes below high threshold?"
+        essential: false
+        type: string
+        question: Webhook transition from high message?
+        value "Electric price has gone under high price limit."
+    
+    fromlow:
+        description: "Which message to send to webhook if value exceeds low threshold?"
+        essential: false
+        type: string
+        question: Webhook transition from message?
+        value "Electric price has exceeded low price limit."
