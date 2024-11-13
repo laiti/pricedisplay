@@ -28,12 +28,14 @@ class WebHook:
     def check( self, now, prices ):
         # Webhook should be run if price for last hour is below the high trigger
         # but price for this hour is above it
-        if prices[-2] < self._highTrigger and prices[-1] >= self._highTrigger:
-            self._MakeRequest(self._baseUrl, self._toHighMessage + " Value is now " + str(prices[-1]))
-        elif prices[-2] > self._lowTrigger and prices[-1] <= self._lowTrigger:
-            self._MakeRequest(self._baseUrl, self._toLowMessage + " Value is now " + str(prices[-1]))
+        price_now = prices[now.hour]
+        price_prev = prices[now.hour - 1]
+        if price_prev < self._highTrigger and price_now >= self._highTrigger:
+            self._MakeRequest(self._baseUrl, self._toHighMessage + " Value is now " + str(price_now))
+        elif price_prev > self._lowTrigger and price_now <= self._lowTrigger:
+            self._MakeRequest(self._baseUrl, self._toLowMessage + " Value is now " + str(price_now))
         # Mention also if we go over low threshold or below high threshold
-        elif prices[-2] < self._lowTrigger and prices[-1] >= self._lowTrigger:
-            self._MakeRequest(self._baseUrl, self._fromLowMessage + " Value is now " + str(prices[-1]))
-        elif prices[-2] > self._highTrigger and prices[-1] <= self._highTrigger:
-            self._MakeRequest(self._baseUrl, self._fromHighMessage + " Value is now " + str(prices[-1]))
+        elif price_prev < self._lowTrigger and price_now >= self._lowTrigger:
+            self._MakeRequest(self._baseUrl, self._fromLowMessage + " Value is now " + str(price_now))
+        elif price_prev > self._highTrigger and price_now <= self._highTrigger:
+            self._MakeRequest(self._baseUrl, self._fromHighMessage + " Value is now " + str(price_now))
