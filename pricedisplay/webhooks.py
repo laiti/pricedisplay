@@ -10,13 +10,13 @@ class WebHook:
 
     def __init__( self, options ):
         try:
-            self._baseUrl = options['webhook.url']
-            self._toHighMessage = options['webhook.tohigh']
-            self._toLowMessage = options['webhook.tolow']
-            self._fromHighMessage = options['webhook.fromhigh']
-            self._fromLowMessage = options['webhook.fromlow']
-            self._highTrigger = options['webhook.highTrigger']
-            self._lowTrigger = options['webhook.lowTrigger']
+            self._baseUrl = options['baseURL']
+            self._toHighMessage = options['toHighMessage']
+            self._toLowMessage = options['toLowMessage']
+            self._fromHighMessage = options['fromHighMessage']
+            self._fromLowMessage = options['fromLowMessage']
+            self._highTrigger = options['highTrigger']
+            self._lowTrigger = options['lowTrigger']
         except KeyError as err:
             raise MissingOptionError( err.args )
 
