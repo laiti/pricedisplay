@@ -162,7 +162,7 @@ webhook:
         essential: false
         type: string
         question: Webhook for transition to high message?
-        value "Electric price has exceeded high price limit."
+        value: "Electric price has exceeded high price limit."
 
     tolow:
         description: "Which message to send to webhook if value goes below low threshold?"
@@ -176,11 +176,11 @@ webhook:
         essential: false
         type: string
         question: Webhook for transition from high message?
-        value "Electric price has gone under high price limit."
+        value: "Electric price has gone under high price limit."
 
     fromlow:
         description: "Which message to send to webhook if value exceeds low threshold?"
         essential: false
         type: string
         question: Webhook for transition from message?
-        valu: "Electric price has exceeded low price limit."
+        value: "Electric price has exceeded low price limit."
