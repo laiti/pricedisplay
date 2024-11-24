@@ -22,7 +22,10 @@ class WebHook:
 
     def _MakeRequest( self, url, message ):
         content = {'message': message}
-        response = requests.post(url, json = content)
+        try:
+            response = requests.post(url, json = content)
+        except err:
+            pass
 
     # Check if the webhook should be run
     def check( self, now, prices ):
