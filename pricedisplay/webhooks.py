@@ -24,7 +24,7 @@ class WebHook:
         content = {'message': message}
         try:
             response = requests.post(url, json = content)
-        except err:
+        except requests.exceptions.RequestException as err:
             pass
 
     # Check if the webhook should be run
